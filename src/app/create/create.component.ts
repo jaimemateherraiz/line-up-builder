@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { SelectorComponent } from './selector/selector.component';
 
 @Component({
   selector: 'app-create',
-  imports: [],
+  imports: [SelectorComponent],
   templateUrl: './create.component.html',
   styleUrl: './create.component.css'
 })
