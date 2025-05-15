@@ -1,0 +1,28 @@
+.con {
+  border: 2px solid purple;
+}
+.cosas {
+  border: 2px solid orange;
+}
+.asd {
+  border: 2px solid yellow;
+}
+
+#Jaime {
+  border: 2px solid blue;
+  width: 30vw;
+}
+.btn {
+  border: 2px solid red;
+}
+.teamName {
+  width: 30vw;
+  border: 2px solid red;
+}
+.hero {
+  border: 2px solid green;
+  height: 85vh;
+}
+.Parte-Jaime {
+  border: 2px solid blue;
+}
