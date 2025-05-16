@@ -4,11 +4,11 @@ import { PeticionesApiService } from '../../peticiones-api.service';
 import { ApiResponse, PlayerResponse } from '../../models/Players';
 import { SinglePlayerApiResponse, Statistic } from '../../models/SinglePlayer';
 import { FormsModule } from '@angular/forms';
-import { NgIf, NgFor } from '@angular/common';
+import { NgIf, NgFor, NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-selector',
-  imports: [FormsModule, NgIf, NgFor],
+  imports: [FormsModule, NgIf, NgFor, NgStyle],
   templateUrl: './selector.component.html',
   styleUrl: './selector.component.css'
 })
@@ -17,15 +17,21 @@ export class SelectorComponent implements OnInit {
   private apiService = inject(PeticionesApiService);
 
   players: PlayerResponse[] = [];
+  response: ApiResponse[] = [];
   playerStatistics: Statistic[] | null = null;
 
   private _teamId: number | null = null;
-  playerId: number = 0; // ID del equipo seleccionado
+
+  positionColor: Record<string, string> = {
+    Attacker: '#91211B',
+    Defender: '#42713F',
+    Goalkeeper: '#405BA4',
+    Midfielder: '#AEA503',
+  }
 
   ngOnInit(): void {   // Usamos ngOnInit para la inicialización
     this.teamId = null;  // Asegura que el valor inicial sea null
   }
-
   get teamId(): number | null {
     return this._teamId;
   }
@@ -56,15 +62,27 @@ export class SelectorComponent implements OnInit {
     }
   }
 
-  obtenerInfoJugador(playerId: number) {
-    this.apiService.getPlayerInfo(playerId).subscribe((apiResponse: SinglePlayerApiResponse) => {
-      if (apiResponse && apiResponse.response && apiResponse.response.length > 0) {
-        this.playerStatistics = apiResponse.response[0].statistics; // Extrae las estadísticas
-        console.log("Estadisticas de Jugador:", this.playerStatistics);
-      } else {
-        console.error('La respuesta de la API no tiene la estructura esperada para getPlayerInfo.');
-        this.playerStatistics = null;
-      }
-    });
+  // Función para abreviar la posición
+  abreviarPosicion(posicion: string): string {
+    switch (posicion) {
+      case 'Attacker': return 'DL'; // Delantero
+      case 'Defender': return 'DF'; // Defensa
+      case 'Midfielder': return 'MD'; // Mediocampista
+      case 'Goalkeeper': return 'POR'; // Portero
+      default: return posicion;
+    }
   }
+  //_________________________CREO QUE NO VA A HACER FALTA___________________________ 
+
+  // obtenerInfoJugador(playerId: number) {
+  //   this.apiService.getPlayerInfo(playerId).subscribe((apiResponse: SinglePlayerApiResponse) => {
+  //     if (apiResponse && apiResponse.response && apiResponse.response.length > 0) {
+  //       this.playerStatistics = apiResponse.response[0].statistics; // Extrae las estadísticas
+  //       console.log("Estadisticas de Jugador:", this.playerStatistics);
+  //     } else {
+  //       console.error('La respuesta de la API no tiene la estructura esperada para getPlayerInfo.');
+  //       this.playerStatistics = null;
+  //     }
+  //   });
+  // }
 }
