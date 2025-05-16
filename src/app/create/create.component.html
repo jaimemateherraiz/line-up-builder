@@ -1,7 +1,7 @@
 <section class="con container-fluid d-flex flex-column justify-content-start">
   <div class="asd row d-flex align-items-center">
     <div class="jaiiime col-8 d-flex justify-content-center">
-      <select id="Jaime" class="form-control" (change)="updatePlayerPositions($event.target.value)">
+      <select #formationSelect id="Jaime" class="form-control" (change)="updatePlayerPositions(formationSelect.value)">
         <option selected style="display: none;" value="">SELECCIONA UNA FORMACIÓN</option>
         <option value="4-3-3">4-3-3</option>
         <option value="4-4-2">4-4-2</option>
