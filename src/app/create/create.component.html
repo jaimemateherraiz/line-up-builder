@@ -1,31 +1,103 @@
 <section class="con container-fluid d-flex flex-column justify-content-start">
-    <div class="asd row d-flex align-items-center">
-        <div class="col-6 d-flex">
-            <select id="Jaime" class="form-control" aria-label="Default select example">
-                <option selected style="display: none;">SELECCIONA FORMACION</option>
-            </select>
-        </div>
-        <div class="cosas col-6 d-flex justify-content-end">
-            <button class="btn btn-primary"> DESCARGAR </button>
-            <div class="input-group flex-nowrap w-50">
-                <input type="text" class=" teamName form-control" placeholder="Nombre de equipo"
-                    aria-label="Nombre de equipo" aria-describedby="addon-wrapping">
-            </div>
-        </div>
+  <div class="asd row d-flex align-items-center">
+    <div class="jaiiime col-8 d-flex justify-content-center">
+      <select id="Jaime" class="form-control" (change)="updatePlayerPositions($event.target.value)">
+        <option selected style="display: none;" value="">SELECCIONA UNA FORMACIÓN</option>
+        <option value="4-3-3">4-3-3</option>
+        <option value="4-4-2">4-4-2</option>
+        <option value="4-2-3-1">4-2-3-1</option>
+        <option value="3-5-2">3-5-2</option>
+        <option value="5-3-2">5-3-2</option>
+    </select>
     </div>
+    <div class="cosas col-4 d-flex justify-content-start">
+      <button class="btn btn-primary">DESCARGAR</button>
+      <div class="input-group flex-nowrap w-50">
+        <input
+          type="text"
+          class="teamName form-control"
+          placeholder="Nombre de equipo"
+          aria-label="Nombre de equipo"
+          aria-describedby="addon-wrapping"
+        />
+      </div>
+    </div>
+  </div>
 </section>
 
-<div class="hero container-fluid d-flex flex-column align-items-center">
-    <div class="row d-flex align-items-center">
-        <div class="Parte-Jaime col-8">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex nobis dolorum assumenda facere sunt ratione
-            debitis
-            doloremque officia pariatur. Ad minus doloremque, perferendis quaerat eaque earum praesentium asperiores
-            repellendus a!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, voluptas. Sit optio maiores et excepturi
-            dignissimos iste, vero esse totam doloribus unde facilis quisquam ipsum doloremque laboriosam cumque nobis
-            consequuntur!
+<!-- <div class="hero container-fluid d-flex flex-column">
+  <div class="row d-flex align-items-center">
+    <div class="col-8 d-flex justify-content-center align-items-center">
+      <div class="" style="position: relative; display: inline-block">
+        <img
+          id="field"
+          class="img-fluid"
+          src="https://img.freepik.com/foto-gratis/fondo-futbol_23-2147832056.jpg?uid=R189553105&ga=GA1.1.1988649170.1746961137&w=740"
+          alt="Campo de Fútbol"
+          style="display: block"
+        />
+        <div
+          id="player-positions-container"
+          style="
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+          "
+        >
+          <div
+            *ngFor="let player of playerPositions"
+            class="player-marker"
+            [style.left.%]="player.x"
+            [style.top.%]="player.y"
+            [style.backgroundColor]="player.color || 'red'"
+            [style.pointer-events]="'auto'"
+            title="{{ player.role }}"
+          ></div>
         </div>
-        <app-selector class="col-4"> </app-selector>
+      </div>
     </div>
+    <app-selector class="col-4"> </app-selector>
+  </div>
+</div> -->
+<div class="hero container-fluid d-flex flex-column ">
+  <div class="row d-flex align-items-center">
+      <div class="col-8 d-flex justify-content-center align-items-center">
+         <div style="position: relative; display: inline-block;">
+             <img id="field" class="img-fluid"
+                  src="https://img.freepik.com/foto-gratis/fondo-futbol_23-2147832056.jpg?uid=R189553105&ga=GA1.1.1988649170.1746961137&w=740"
+                  alt="Campo de Fútbol" style="display: block;">
+
+             <div id="player-positions-container"
+                  style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                  <div *ngFor="let position of playerPositions"
+                       class="player-marker-slot" [class.occupied]="position.isOccupied"
+                       [class.drag-over-active]="position.isDragOver" [style.left.%]="position.x"
+                       [style.top.%]="position.y"
+                       [style.pointer-events]="'auto'"
+                       (dragover)="onDragOver($event, position)"
+                       (dragleave)="onDragLeave($event, position)"
+                       (drop)="onDrop($event, position)"
+                       title="{{ position.isOccupied ? position.droppedPlayer?.name : position.role }}">
+
+                      <ng-container *ngIf="position.isOccupied && position.droppedPlayer">
+                          <div class="field-player-card">
+                              <img class="field-player-img" [src]="position.droppedPlayer.photo" alt="{{ position.droppedPlayer.name }}">
+                              <div class="field-player-name">{{ position.droppedPlayer.name }}</div>
+                              <button *ngIf="position.isOccupied" class="clear-slot-btn" (click)="clearPlayerSlot(position)" title="Quitar jugador">X</button>
+                          </div>
+                      </ng-container>
+                      <ng-container *ngIf="!position.isOccupied">
+                          <div class="empty-slot-placeholder" [style.background-color]="position.color">
+                              {{ position.role }}
+                          </div>
+                      </ng-container>
+                  </div>
+             </div>
+         </div>
+      </div>
+      <app-selector class="col-4"></app-selector>
+  </div>
 </div>

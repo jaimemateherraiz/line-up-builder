@@ -10,10 +10,9 @@ import { NgIf, NgFor, NgStyle } from '@angular/common';
   selector: 'app-selector',
   imports: [FormsModule, NgIf, NgFor, NgStyle],
   templateUrl: './selector.component.html',
-  styleUrl: './selector.component.css'
+  styleUrl: './selector.component.css',
 })
 export class SelectorComponent implements OnInit {
-
   private apiService = inject(PeticionesApiService);
 
   players: PlayerResponse[] = [];
@@ -27,10 +26,11 @@ export class SelectorComponent implements OnInit {
     Defender: '#42713F',
     Goalkeeper: '#405BA4',
     Midfielder: '#AEA503',
-  }
+  };
 
-  ngOnInit(): void {   // Usamos ngOnInit para la inicialización
-    this.teamId = null;  // Asegura que el valor inicial sea null
+  ngOnInit(): void {
+    // Usamos ngOnInit para la inicialización
+    this.teamId = null; // Asegura que el valor inicial sea null
   }
   get teamId(): number | null {
     return this._teamId;
@@ -47,16 +47,25 @@ export class SelectorComponent implements OnInit {
   }
 
   obtenerJugadores(teamId: number) {
-    if (teamId > 0) { // Evita la petición inicial con 0
-      this.apiService.getPlayers(teamId).subscribe((apiResponse: ApiResponse) => {
-        if (apiResponse && apiResponse.response && Array.isArray(apiResponse.response)) {
-          this.players = apiResponse.response;
-          console.log("Jugadores:", this.players);
-        } else {
-          this.players = []; // Limpia la lista en caso de error o respuesta vacía
-          console.error('La respuesta de la API no tiene la estructura esperada para getPlayers.');
-        }
-      });
+    if (teamId > 0) {
+      // Evita la petición inicial con 0
+      this.apiService
+        .getPlayers(teamId)
+        .subscribe((apiResponse: ApiResponse) => {
+          if (
+            apiResponse &&
+            apiResponse.response &&
+            Array.isArray(apiResponse.response)
+          ) {
+            this.players = apiResponse.response;
+            console.log('Jugadores:', this.players);
+          } else {
+            this.players = []; // Limpia la lista en caso de error o respuesta vacía
+            console.error(
+              'La respuesta de la API no tiene la estructura esperada para getPlayers.'
+            );
+          }
+        });
     } else {
       this.players = []; // Limpia la lista si no hay equipo seleccionado
     }
@@ -65,14 +74,38 @@ export class SelectorComponent implements OnInit {
   // Función para abreviar la posición
   abreviarPosicion(posicion: string): string {
     switch (posicion) {
-      case 'Attacker': return 'DL'; // Delantero
-      case 'Defender': return 'DF'; // Defensa
-      case 'Midfielder': return 'MD'; // Mediocampista
-      case 'Goalkeeper': return 'POR'; // Portero
-      default: return posicion;
+      case 'Attacker':
+        return 'DL'; // Delantero
+      case 'Defender':
+        return 'DF'; // Defensa
+      case 'Midfielder':
+        return 'MD'; // Mediocampista
+      case 'Goalkeeper':
+        return 'POR'; // Portero
+      default:
+        return posicion;
     }
   }
-  //_________________________CREO QUE NO VA A HACER FALTA___________________________ 
+
+  // Método para iniciar el arrastre del jugador
+  onPlayerDragStart(event: DragEvent, player: PlayerResponse): void {
+    if (event.dataTransfer) {
+      const playerData = {
+        id: player.player.id, // Asegúrate que tu modelo PlayerResponse tenga player.id
+        name: player.player.name,
+        photo: player.player.photo,
+      };
+      event.dataTransfer.setData(
+        'application/json',
+        JSON.stringify(playerData)
+      );
+      event.dataTransfer.effectAllowed = 'move';
+    } else {
+      console.error('DataTransfer no está disponible.');
+    }
+  }
+  
+  //_________________________CREO QUE NO VA A HACER FALTA___________________________
 
   // obtenerInfoJugador(playerId: number) {
   //   this.apiService.getPlayerInfo(playerId).subscribe((apiResponse: SinglePlayerApiResponse) => {
