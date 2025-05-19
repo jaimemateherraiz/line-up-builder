@@ -40,15 +40,14 @@
 /* Ajusta el z-index si los marcadores quedan debajo de otros elementos */
 #player-positions-container {
   z-index: 10;
-  border: solid 1px rgb(0, 0, 0);
 }
 
 .wrapper {
   width: 80%;
+  border: 5px solid #01916a;
 }
 
 /* create.component.css */
-
 #player-positions-container {
   z-index: 10; /* Para que los marcadores estén sobre la imagen del campo */
 }
@@ -100,8 +99,8 @@
   flex-direction: column; /* Imagen arriba, nombre abajo */
   align-items: center;
   justify-content: center; /* Centra el contenido si hay espacio extra */
-  background-color: #ffffff;
-  border: 1px solid #ccc;
+  background-color: #43bae1;
+  border: 1px solid #2c7790;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 5px;
@@ -121,8 +120,8 @@
 
 .field-player-name {
   font-size: 0.8em;
-  font-weight: bold;
-  color: #333;
+  font-weight: bolder;
+  color: #ffffff;
   white-space: nowrap; /* Evita que el nombre se parta en múltiples líneas */
   overflow: hidden; /* Oculta el texto que no quepa */
   text-overflow: ellipsis; /* Añade "..." si el nombre es muy largo */
