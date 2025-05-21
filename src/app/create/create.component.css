@@ -13,7 +13,8 @@
 }
 
 #field {
-  width: 100%;
+  width: 90%;
+  justify-self: center;
 }
 
 /* create.component.css */
@@ -43,13 +44,16 @@
 }
 
 .wrapper {
-  width: 80%;
+  display: flex;
+  width: 90%;
+  background-color: #58bc82;
   border: 5px solid #01916a;
 }
 
 /* create.component.css */
 #player-positions-container {
-  z-index: 10; /* Para que los marcadores estén sobre la imagen del campo */
+  z-index: 10;
+  margin-left: 6%; /* Para que los marcadores estén sobre la imagen del campo */
 }
 
 /* Estilo base para el slot en el campo (el área de drop) */

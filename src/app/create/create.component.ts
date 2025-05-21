@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { SelectorComponent } from './selector/selector.component';
 import { CommonModule } from '@angular/common';
-
+import html2canvas from 'html2canvas';
+import { FormsModule } from '@angular/forms';
 // Interfaz para los datos del jugador que se arrastran
 interface DraggedPlayerData {
   id: number;
@@ -25,8 +26,9 @@ interface PlayerPosition {
   standalone: true,
   imports: [
     CommonModule /* , SelectorComponent (si app-selector está en este template y es standalone) */,
-    SelectorComponent
-],
+    SelectorComponent,
+    FormsModule
+  ],
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css'], // Este CSS definirá el estilo de la card en el campo
 })
@@ -35,6 +37,8 @@ export class CreateComponent implements AfterViewInit {
 
   public playerPositions: PlayerPosition[] = [];
 
+  lineUpName: string = ''; // Nombre de la alineación, se puede enlazar a un input en el template
+
   // Definición de formaciones (como en la respuesta anterior)
   private formationsData: {
     [key: string]: Omit<
@@ -42,75 +46,75 @@ export class CreateComponent implements AfterViewInit {
       'id' | 'isOccupied' | 'isDragOver' | 'droppedPlayer'
     >[];
   } = {
-    '4-3-3': [
-      { x: 5, y: 50, role: 'POR', color: '#405BA4' },
-      { x: 20, y: 20, role: 'LD', color: '#42713F' },
-      { x: 20, y: 40, role: 'DFC', color: '#42713F' },
-      { x: 20, y: 60, role: 'DFC', color: '#42713F' },
-      { x: 20, y: 80, role: 'LI', color: '#42713F' },
-      { x: 45, y: 30, role: 'MC', color: '#AEA503' },
-      { x: 45, y: 50, role: 'MC', color: '#AEA503' },
-      { x: 45, y: 70, role: 'MC', color: '#AEA503' },
-      { x: 70, y: 25, role: 'ED', color: '#91211B' },
-      { x: 70, y: 50, role: 'DC', color: '#91211B' },
-      { x: 70, y: 75, role: 'EI', color: '#91211B' },
-    ],
-    // ... (otras formaciones como 4-4-2, 4-2-3-1, 3-5-2, 5-3-2)
-    '4-4-2': [
-      { x: 5, y: 50, role: 'POR', color: '#405BA4' },
-      { x: 20, y: 20, role: 'LD', color: '#42713F' },
-      { x: 20, y: 40, role: 'DFC', color: '#42713F' },
-      { x: 20, y: 60, role: 'DFC', color: '#42713F' },
-      { x: 20, y: 80, role: 'LI', color: '#42713F' },
-      { x: 45, y: 15, role: 'MD', color: '#AEA503' },
-      { x: 45, y: 40, role: 'MC', color: '#AEA503' },
-      { x: 45, y: 60, role: 'MC', color: '#AEA503' },
-      { x: 45, y: 85, role: 'MI', color: '#AEA503' },
-      { x: 70, y: 35, role: 'DC', color: '#91211B' },
-      { x: 70, y: 65, role: 'DC', color: '#91211B' },
-    ],
-    '4-2-3-1': [
-      { x: 5, y: 50, role: 'POR', color: '#405BA4' },
-      { x: 20, y: 20, role: 'LD', color: '#42713F' },
-      { x: 20, y: 40, role: 'DFC', color: '#42713F' },
-      { x: 20, y: 60, role: 'DFC', color: '#42713F' },
-      { x: 20, y: 80, role: 'LI', color: '#42713F' },
-      { x: 38, y: 35, role: 'MCD', color: '#AEA503' },
-      { x: 38, y: 65, role: 'MCD', color: '#AEA503' },
-      { x: 55, y: 20, role: 'MPD', color: '#AEA503' },
-      { x: 55, y: 50, role: 'MPC', color: '#AEA503' },
-      { x: 55, y: 80, role: 'MPI', color: '#AEA503' },
-      { x: 75, y: 50, role: 'DC', color: '#91211B' },
-    ],
-    '3-5-2': [
-      { x: 5, y: 50, role: 'POR', color: '#405BA4' },
-      { x: 20, y: 30, role: 'DFC', color: '#42713F' },
-      { x: 20, y: 50, role: 'DFC', color: '#42713F' },
-      { x: 20, y: 70, role: 'DFC', color: '#42713F' },
-      { x: 45, y: 10, role: 'CARD', color: '#AEA503' },
-      { x: 40, y: 35, role: 'MC', color: '#AEA503' },
-      { x: 40, y: 50, role: 'MC', color: '#AEA503' },
-      { x: 40, y: 65, role: 'MC', color: '#AEA503' },
-      { x: 45, y: 90, role: 'CARI', color: '#AEA503' },
-      { x: 70, y: 40, role: 'DC', color: '#91211B' },
-      { x: 70, y: 60, role: 'DC', color: '#91211B' },
-    ],
-    '5-3-2': [
-      { x: 5, y: 50, role: 'POR', color: '#405BA4' },
-      { x: 20, y: 15, role: 'CARD', color: '#42713F' },
-      { x: 22, y: 35, role: 'DFC', color: '#42713F' },
-      { x: 22, y: 50, role: 'DFC (LIB)', color: '#42713F' },
-      { x: 22, y: 65, role: 'DFC', color: '#42713F' },
-      { x: 20, y: 85, role: 'CARI', color: '#42713F' },
-      { x: 45, y: 30, role: 'MC', color: '#AEA503' },
-      { x: 45, y: 50, role: 'MC', color: '#AEA503' },
-      { x: 45, y: 70, role: 'MC', color: '#AEA503' },
-      { x: 70, y: 40, role: 'DC', color: '#91211B' },
-      { x: 70, y: 60, role: 'DC', color: '#91211B' },
-    ],
-  };
+      '4-3-3': [
+        { x: 5, y: 50, role: 'POR', color: '#405BA4' },
+        { x: 20, y: 20, role: 'LD', color: '#42713F' },
+        { x: 20, y: 40, role: 'DFC', color: '#42713F' },
+        { x: 20, y: 60, role: 'DFC', color: '#42713F' },
+        { x: 20, y: 80, role: 'LI', color: '#42713F' },
+        { x: 45, y: 30, role: 'MC', color: '#AEA503' },
+        { x: 45, y: 50, role: 'MC', color: '#AEA503' },
+        { x: 45, y: 70, role: 'MC', color: '#AEA503' },
+        { x: 70, y: 25, role: 'ED', color: '#91211B' },
+        { x: 70, y: 50, role: 'DC', color: '#91211B' },
+        { x: 70, y: 75, role: 'EI', color: '#91211B' },
+      ],
+      // ... (otras formaciones como 4-4-2, 4-2-3-1, 3-5-2, 5-3-2)
+      '4-4-2': [
+        { x: 5, y: 50, role: 'POR', color: '#405BA4' },
+        { x: 20, y: 20, role: 'LD', color: '#42713F' },
+        { x: 20, y: 40, role: 'DFC', color: '#42713F' },
+        { x: 20, y: 60, role: 'DFC', color: '#42713F' },
+        { x: 20, y: 80, role: 'LI', color: '#42713F' },
+        { x: 45, y: 15, role: 'MD', color: '#AEA503' },
+        { x: 45, y: 40, role: 'MC', color: '#AEA503' },
+        { x: 45, y: 60, role: 'MC', color: '#AEA503' },
+        { x: 45, y: 85, role: 'MI', color: '#AEA503' },
+        { x: 70, y: 35, role: 'DC', color: '#91211B' },
+        { x: 70, y: 65, role: 'DC', color: '#91211B' },
+      ],
+      '4-2-3-1': [
+        { x: 5, y: 50, role: 'POR', color: '#405BA4' },
+        { x: 20, y: 20, role: 'LD', color: '#42713F' },
+        { x: 20, y: 40, role: 'DFC', color: '#42713F' },
+        { x: 20, y: 60, role: 'DFC', color: '#42713F' },
+        { x: 20, y: 80, role: 'LI', color: '#42713F' },
+        { x: 38, y: 35, role: 'MCD', color: '#AEA503' },
+        { x: 38, y: 65, role: 'MCD', color: '#AEA503' },
+        { x: 55, y: 20, role: 'MPD', color: '#AEA503' },
+        { x: 55, y: 50, role: 'MPC', color: '#AEA503' },
+        { x: 55, y: 80, role: 'MPI', color: '#AEA503' },
+        { x: 75, y: 50, role: 'DC', color: '#91211B' },
+      ],
+      '3-5-2': [
+        { x: 5, y: 50, role: 'POR', color: '#405BA4' },
+        { x: 20, y: 30, role: 'DFC', color: '#42713F' },
+        { x: 20, y: 50, role: 'DFC', color: '#42713F' },
+        { x: 20, y: 70, role: 'DFC', color: '#42713F' },
+        { x: 45, y: 10, role: 'CARD', color: '#AEA503' },
+        { x: 40, y: 35, role: 'MC', color: '#AEA503' },
+        { x: 40, y: 50, role: 'MC', color: '#AEA503' },
+        { x: 40, y: 65, role: 'MC', color: '#AEA503' },
+        { x: 45, y: 90, role: 'CARI', color: '#AEA503' },
+        { x: 70, y: 40, role: 'DC', color: '#91211B' },
+        { x: 70, y: 60, role: 'DC', color: '#91211B' },
+      ],
+      '5-3-2': [
+        { x: 5, y: 50, role: 'POR', color: '#405BA4' },
+        { x: 20, y: 15, role: 'CARD', color: '#42713F' },
+        { x: 22, y: 35, role: 'DFC', color: '#42713F' },
+        { x: 22, y: 50, role: 'DFC (LIB)', color: '#42713F' },
+        { x: 22, y: 65, role: 'DFC', color: '#42713F' },
+        { x: 20, y: 85, role: 'CARI', color: '#42713F' },
+        { x: 45, y: 30, role: 'MC', color: '#AEA503' },
+        { x: 45, y: 50, role: 'MC', color: '#AEA503' },
+        { x: 45, y: 70, role: 'MC', color: '#AEA503' },
+        { x: 70, y: 40, role: 'DC', color: '#91211B' },
+        { x: 70, y: 60, role: 'DC', color: '#91211B' },
+      ],
+    };
 
-  constructor() {}
+  constructor() { }
 
   // Event listener para el select de formación (del HTML original)
   // Este método tiene que estar presente si el (change) event está en el select
@@ -206,5 +210,47 @@ export class CreateComponent implements AfterViewInit {
   clearPlayerSlot(position: PlayerPosition): void {
     position.droppedPlayer = undefined;
     position.isOccupied = false;
+  }
+
+  // downloadImage(): void {
+  //   html2canvas(document.querySelector('#captura')!).then((canvas) => {
+  //     const link = document.createElement('a');
+  //     link.href = canvas.toDataURL('image/png');
+  //     link.download = `${this.lineUpName}.png`;
+  //     link.click();
+  //   });
+  // }
+  downloadImage(): void {
+    const elementToCapture = document.querySelector('#captura') as HTMLElement | null;
+
+    if (!elementToCapture) {
+      console.error('Elemento #captura no encontrado.');
+      return;
+    }
+
+    html2canvas(elementToCapture, {
+      allowTaint: false, // Es importante establecer esto en false cuando useCORS es true
+      useCORS: true,     // ¡Esta es la opción clave!
+      logging: true,     // Muestra logs en la consola, útil para depurar problemas con html2canvas
+      // Opcional: Si la imagen de fondo es la única que causa problemas y es muy grande,
+      // a veces un pequeño retraso puede ayudar, aunque useCORS es la solución principal.
+      //windowDelay: 500, // Espera 500ms después de que la ventana cargue (menos común para imágenes específicas)
+
+      // Si quieres un fondo específico para el PNG (en caso de transparencias en tu diseño)
+      // backgroundColor: '#ffffff', // Por ejemplo, blanco. Si es null, respeta la transparencia.
+
+      // Para mejorar la calidad en pantallas de alta densidad (retina), puedes usar la escala:
+      scale: window.devicePixelRatio,
+    }).then((canvas) => {
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png'); // Mantienes PNG, que soporta transparencia
+      // Si quisieras JPEG (no soporta transparencia):
+      // link.href = canvas.toDataURL('image/jpeg', 0.9); // 0.9 es la calidad (90%)
+      link.download = `${this.lineUpName || 'Line-Up-By-You'}.png`; // Asegúrate que lineUpName tenga un valor
+      link.click();
+    }).catch(error => {
+      console.error('Error al generar la imagen con html2canvas:', error);
+      // Aquí podrías mostrar un mensaje al usuario indicando que hubo un problema.
+    });
   }
 }

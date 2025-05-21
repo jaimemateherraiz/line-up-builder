@@ -9,21 +9,30 @@
   display: flex;
   justify-content: space-between;
   gap: 40px;
+  /* border: 2px solid purple; */
 }
 
-.izquierda, .derecha {
+.row {
+  /* border: 2px solid pink; */
+}
+
+.izquierda,
+.derecha {
   flex: 1;
+  /* border: 2px solid blue; */
 }
 
 .imagen-alineacion {
   width: 100%;
   max-width: 300px;
   margin-top: 0px;
+  /* border: 2px solid green; */
 }
 
 .derecha p {
   font-size: 18px;
   margin-bottom: 10px;
+  /* border: 2px solid red; */
 }
 
 button {
