@@ -1,11 +1,12 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { CreateComponent } from './create/create.component';
-import { ContactoComponent } from './component/contacto/contacto.component';
+import { FormularioComponent } from './formulario/formulario.component';
+
 
 export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'create', component: CreateComponent },
-    { path: 'contacto', component: ContactoComponent},
+    { path: 'contacto', component: FormularioComponent },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
