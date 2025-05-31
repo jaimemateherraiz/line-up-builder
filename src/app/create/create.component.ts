@@ -221,6 +221,18 @@ export class CreateComponent implements AfterViewInit {
   //   });
   // }
   downloadImage(): void {
+    if (!this.playerPositions.length) {
+      // @ts-ignore
+      import('sweetalert2').then(Swal => {
+        Swal.default.fire({
+          icon: 'warning',
+          title: 'Antes de nada rellena la alineación!',
+          confirmButtonText: 'OK'
+        });
+      });
+      return;
+    }
+
     const elementToCapture = document.querySelector('#captura') as HTMLElement | null;
 
     if (!elementToCapture) {
@@ -229,28 +241,17 @@ export class CreateComponent implements AfterViewInit {
     }
 
     html2canvas(elementToCapture, {
-      allowTaint: false, // Es importante establecer esto en false cuando useCORS es true
-      useCORS: true,     // ¡Esta es la opción clave!
-      logging: true,     // Muestra logs en la consola, útil para depurar problemas con html2canvas
-      // Opcional: Si la imagen de fondo es la única que causa problemas y es muy grande,
-      // a veces un pequeño retraso puede ayudar, aunque useCORS es la solución principal.
-      //windowDelay: 500, // Espera 500ms después de que la ventana cargue (menos común para imágenes específicas)
-
-      // Si quieres un fondo específico para el PNG (en caso de transparencias en tu diseño)
-      // backgroundColor: '#ffffff', // Por ejemplo, blanco. Si es null, respeta la transparencia.
-
-      // Para mejorar la calidad en pantallas de alta densidad (retina), puedes usar la escala:
+      allowTaint: false,
+      useCORS: true,
+      logging: true,
       scale: window.devicePixelRatio,
     }).then((canvas) => {
       const link = document.createElement('a');
-      link.href = canvas.toDataURL('image/png'); // Mantienes PNG, que soporta transparencia
-      // Si quisieras JPEG (no soporta transparencia):
-      // link.href = canvas.toDataURL('image/jpeg', 0.9); // 0.9 es la calidad (90%)
-      link.download = `${this.lineUpName || 'Line-Up-By-You'}.png`; // Asegúrate que lineUpName tenga un valor
+      link.href = canvas.toDataURL('image/png');
+      link.download = `${this.lineUpName || 'Line-Up-By-You'}.png`;
       link.click();
     }).catch(error => {
       console.error('Error al generar la imagen con html2canvas:', error);
-      // Aquí podrías mostrar un mensaje al usuario indicando que hubo un problema.
     });
   }
 }
