@@ -105,17 +105,5 @@ export class SelectorComponent implements OnInit {
     }
   }
   
-  //_________________________CREO QUE NO VA A HACER FALTA___________________________
-
-  // obtenerInfoJugador(playerId: number) {
-  //   this.apiService.getPlayerInfo(playerId).subscribe((apiResponse: SinglePlayerApiResponse) => {
-  //     if (apiResponse && apiResponse.response && apiResponse.response.length > 0) {
-  //       this.playerStatistics = apiResponse.response[0].statistics; // Extrae las estadísticas
-  //       console.log("Estadisticas de Jugador:", this.playerStatistics);
-  //     } else {
-  //       console.error('La respuesta de la API no tiene la estructura esperada para getPlayerInfo.');
-  //       this.playerStatistics = null;
-  //     }
-  //   });
-  // }
+  
 }

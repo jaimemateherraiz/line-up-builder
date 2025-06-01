@@ -17,12 +17,11 @@
   justify-self: center;
 }
 
-/* create.component.css */
 .player-marker {
   position: absolute;
-  width: 30px; /* Tamaño del marcador del jugador */
-  height: 30px; /* Tamaño del marcador del jugador */
-  border-radius: 50%; /* Hace que el marcador sea un círculo */
+  width: 30px; 
+  height: 30px;
+  border-radius: 50%;
   border: 1px solid white;
   display: flex;
   justify-content: center;
@@ -38,7 +37,6 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-/* Ajusta el z-index si los marcadores quedan debajo de otros elementos */
 #player-positions-container {
   z-index: 10;
 }
@@ -56,7 +54,7 @@
   margin-left: 6%; /* Para que los marcadores estén sobre la imagen del campo */
 }
 
-/* Estilo base para el slot en el campo (el área de drop) */
+/* área de drop */
 .player-marker-slot {
   position: absolute;
   width: 75px; /* Define el tamaño del área donde se mostrará la card o el placeholder */
