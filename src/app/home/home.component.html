@@ -1,28 +1,79 @@
-<div class="inicio-container container-fluid">
-  <div class="superior d-flex">
-    <div class="row d-flex justify-content-center align-items-center">
-      <div class="izquierda col-5 d-flex justify-content-center">
+<div class="container-fluid bg-light py-5">
+  <div class="container text-center">
+    <h1 class="display-4">Crea la Alineación de Tus Sueños</h1>
+    <p class="lead">
+      Con Line Up, diseña alineaciones de fútbol de forma fácil, visual e
+      intuitiva. Elige tu formación, selecciona tu equipo de La Liga y arrastra
+      a los jugadores al campo para crear tu once ideal.
+    </p>
+    <button class="btn btn-success btn-lg mt-3" (click)="irACrear()">
+      ¡Empieza a Crear!
+    </button>
+  </div>
+</div>
 
-        <img src="assets/imagen5.jpg" alt="Imagen de alineación" class="imagen-alineacion">
-      </div>
-      <div class="derecha col-7">
-        <p>Gracias a Line Up podras divertirte generando las mejores alineaciones
-          de futbol con los equipos de la liga española. </p>
-        <p>
-          Elige la formación que desees, puedes
-          crear las mas random, elige un equipo y formación y de ahí arrastra a los diferentes
-          jugadores a sus posiciones. ¡Que no se te olvide escribir el nombre de tu
-          equipo! ¿A qué esperas? Juega con Line Up y se el master of the futbol.
-        </p>
-
-        <button (click)="irACrear()"> Ir a Crear</button>
-      </div>
+<div class="container py-5">
+  <div class="row">
+    <div class="col-12 text-center mb-5">
+      <h2 class="display-5">¿Cómo Funciona?</h2>
     </div>
   </div>
-  <div class="galeria">
-    <img src="assets/imagen1.jpg" alt="Imagen 1" class=".galeria img">
-    <img src="assets/imagen2.jpg" alt="Imagen 2">
-    <img src="assets/imagen3.jpg" alt="Imagen 3">
-    <img src="assets/imagen4.jpg" alt="Imagen 4">
+
+  <div class="row align-items-center">
+    <div class="col-lg-7 mb-5 mb-lg-0">
+      <div class="p-3">
+        <div class="video-container shadow-lg">
+          <video class="video-demo" autoplay loop muted playsinline>
+            <source src="assets/videos/video-demo.mp4" type="video/mp4" />
+            Tu navegador no soporta vídeos.
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h4 class="card-title">1. Elige una formación</h4>
+              <p class="card-text">
+                Selecciona tu sistema de juego preferido de la lista.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h4 class="card-title">2. Selecciona un equipo</h4>
+              <p class="card-text">
+                Escoge un equipo para cargar su plantilla de jugadores.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h4 class="card-title">3. Arrastra y suelta</h4>
+              <p class="card-text">
+                Arrastra los jugadores desde la lista al campo.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h4 class="card-title">4. Nombra y descarga</h4>
+              <p class="card-text">
+                Ponle un nombre a tu obra y descárgala como imagen.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
