@@ -1,13 +1,13 @@
-<section class="con container-fluid d-flex flex-column justify-content-start">
-  <div class="asd row d-flex align-items-center">
-    <div class="jaiiime col-8 d-flex justify-content-center">
+<section class="container-fluid d-flex flex-column justify-content-start mb-2">
+  <div class=" row d-flex align-items-center">
+    <div class="col-8 d-flex justify-content-center">
       <select
         #formationSelect
         id="Jaime"
         class="form-control"
         (change)="updatePlayerPositions(formationSelect.value)"
       >
-        <option selected style="display: none" value="">
+        <option selected style="display: none" value=""> 
           SELECCIONA UNA FORMACIÓN
         </option>
         <option value="4-3-3">4-3-3</option>
@@ -17,23 +17,27 @@
         <option value="5-3-2">5-3-2</option>
       </select>
     </div>
-    <div class="cosas col-4 d-flex justify-content-start">
-      <button class="btn btn-primary" (click)="downloadImage()">
-        DESCARGAR
-      </button>
-      <div class="input-group flex-nowrap w-50">
-        <input
-          type="text"
-          class="teamName form-control"
-          placeholder="Nombre de equipo"
-          aria-label="Nombre de equipo"
-          aria-describedby="addon-wrapping"
-          [(ngModel)]="lineUpName"
-        />
+    <div class="col-4 d-flex justify-content-start">
+      <div class="row w-100">
+        <div class="col-8 p-0">
+          <input
+            type="text"
+            class="teamName form-control"
+            placeholder="Nombre de equipo"
+            aria-label="Nombre de equipo"
+            aria-describedby="addon-wrapping"
+            [(ngModel)]="lineUpName"
+            style="width: 100%;"
+          />
+        </div>
+        <div class="col-4 p-0 d-flex align-items-center">
+          <button class="btn btn-primary w-100 ms-2" (click)="downloadImage()">DESCARGAR</button>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
 <div class="hero container-fluid d-flex flex-column">
   <div class="row d-flex align-items-center">
     <div class="col-8 d-flex justify-content-center align-items-center">
