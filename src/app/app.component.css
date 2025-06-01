@@ -1,14 +1,14 @@
-.navbar{
-    margin-bottom: 8px;
+.navbar {
+  margin-bottom: 8px;
 }
 /* :host se refiere al componente app-root en sí mismo */
 :host {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Altura mínima del 100% de la ventana */
-  }
-  
-  /* El contenido principal crecerá para empujar el footer hacia abajo */
-  main {
-    flex: 1;
-  }
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Altura mínima del 100% de la ventana */
+}
+
+/* El contenido principal crecerá para empujar el footer hacia abajo */
+main {
+  flex: 1;
+}
