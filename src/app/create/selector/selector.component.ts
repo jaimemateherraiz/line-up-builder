@@ -57,8 +57,21 @@ export class SelectorComponent implements OnInit {
             apiResponse.response &&
             Array.isArray(apiResponse.response)
           ) {
-            this.players = apiResponse.response;
-            console.log('Jugadores:', this.players);
+            // Ordenar jugadores: primero porteros, luego defensas, medios y delanteros
+            const positionOrder: Record<string, number> = {
+              Goalkeeper: 0,
+              Defender: 1,
+              Midfielder: 2,
+              Attacker: 3,
+            };
+            this.players = apiResponse.response.slice().sort((a, b) => {
+              const posA =
+                positionOrder[a.statistics[0]?.games.position || ''] ?? 99;
+              const posB =
+                positionOrder[b.statistics[0]?.games.position || ''] ?? 99;
+              return posA - posB;
+            });
+            console.log('Jugadores ordenados:', this.players);
           } else {
             this.players = []; // Limpia la lista en caso de error o respuesta vacía
             console.error(
@@ -94,6 +107,7 @@ export class SelectorComponent implements OnInit {
         id: player.player.id, // Asegúrate que tu modelo PlayerResponse tenga player.id
         name: player.player.name,
         photo: player.player.photo,
+        teamLogo: player.statistics[0].team.logo,
       };
       event.dataTransfer.setData(
         'application/json',
@@ -104,6 +118,4 @@ export class SelectorComponent implements OnInit {
       console.error('DataTransfer no está disponible.');
     }
   }
-  
-  
 }

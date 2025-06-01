@@ -19,7 +19,7 @@
 
 .player-marker {
   position: absolute;
-  width: 30px; 
+  width: 30px;
   height: 30px;
   border-radius: 50%;
   border: 1px solid white;
@@ -57,8 +57,8 @@
 /* área de drop */
 .player-marker-slot {
   position: absolute;
-  width: 75px; /* Define el tamaño del área donde se mostrará la card o el placeholder */
-  height: 100px; /* Ajusta estas dimensiones según el tamaño deseado para la card */
+  width: 95px; /* Define el tamaño del área donde se mostrará la card o el placeholder */
+  height: 120px; /* Ajusta estas dimensiones según el tamaño deseado para la card */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,61 +93,101 @@
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 }
 
-/* Estilo para la CARD del jugador cuando se suelta en el campo */
 .field-player-card {
   width: 100%; /* Ocupa todo el espacio del .player-marker-slot */
   height: 100%;
   display: flex;
-  flex-direction: column; /* Imagen arriba, nombre abajo */
-  align-items: center;
-  justify-content: center; /* Centra el contenido si hay espacio extra */
-  background-color: #43bae1;
-  border: 1px solid #2c7790;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 5px;
+  flex-direction: column; /* Apila los elementos verticalmente */
+  align-items: center; /* Centra los elementos horizontalmente */
+  justify-content: flex-start; /* Alinea el contenido arriba */
+  background-color: #f8f9fa; /* Un fondo neutro y claro */
+  border: 1px solid #dee2e6;
+  border-radius: 8px; /* Bordes más redondeados para un look moderno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada para dar profundidad */
+  padding: 8px 4px;
   box-sizing: border-box;
   text-align: center;
-  position: relative; /* Para el botón de limpiar */
+  position: relative; /* Necesario para el botón de limpiar */
+  transition: transform 0.2s ease-in-out;
+}
+.field-player-card:hover {
+  transform: translateY(-2px); /* Pequeña animación al pasar el ratón */
+}
+
+.player-photo-container {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  margin-bottom: 5px; /* Espacio entre la foto y el nombre */
 }
 
 .field-player-img {
-  width: 45px; /* Tamaño de la imagen del jugador en la card del campo */
-  height: 45px;
-  border-radius: 50%; /* Imagen redonda */
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
   object-fit: cover; /* Asegura que la imagen cubra el área sin deformarse */
-  margin-bottom: 5px;
-  border: 1px solid #eee;
+  border: 2px solid #ffffff; /* Borde blanco para resaltar la foto */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .field-player-name {
-  font-size: 0.8em;
-  font-weight: bolder;
-  color: #ffffff;
-  white-space: nowrap; /* Evita que el nombre se parta en múltiples líneas */
-  overflow: hidden; /* Oculta el texto que no quepa */
-  text-overflow: ellipsis; /* Añade "..." si el nombre es muy largo */
-  width: 100%; /* Asegura que el text-overflow funcione */
-  margin-top: auto; /* Empuja el nombre hacia abajo si hay espacio en la tarjeta */
+  font-size: 0.75em;
+  font-weight: 700;
+  color: #212529;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  padding: 0 2px;
+  margin-top: auto;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Fondo blanco semitransparente */
+  border-radius: 4px; /* Bordes redondeados para el nombre */
+}
+
+.field-team-logo {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 20px;
+  height: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  object-fit: contain;
+
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Fondo blanco semitransparente */
+  border-radius: 30%; /* Bordes redondeados para el logo */
+  border: 1px solid #dee2e6; /* Borde sutil para el logo */
 }
 
 .clear-slot-btn {
   position: absolute;
-  top: 1px;
-  right: 1px;
+  top: 3px;
+  right: 3px;
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background-color: rgba(255, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
   border: none;
   cursor: pointer;
-  font-size: 10px;
-  line-height: 18px; /* Centra la X verticalmente */
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 18px;
   text-align: center;
   padding: 0;
-  z-index: 1; /* Para que esté sobre otros elementos de la card si es necesario */
+  z-index: 10;
+  transition: background-color 0.2s;
 }
+
 .clear-slot-btn:hover {
-  background-color: rgba(255, 0, 0, 1);
+  background-color: rgba(255, 0, 0, 0.9);
 }

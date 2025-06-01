@@ -6,6 +6,7 @@
   height: 85vh;
   border: 2px solid rgb(190, 190, 190);
   border-radius: 20px;
+
 }
 .contenido {
   width: 30vw;
@@ -16,8 +17,7 @@
   width: 80%;
   margin-bottom: 20px;
 }
-#list-example {
-  /* font-size: medium; */
+#list-example { 
   font-size: clamp(0.4vw, 1vw, medium);
 }
 
