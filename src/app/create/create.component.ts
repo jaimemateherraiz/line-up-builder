@@ -172,6 +172,28 @@ export class CreateComponent implements AfterViewInit {
       if (playerDataString) {
         try {
           const playerData: DraggedPlayerData = JSON.parse(playerDataString);
+
+          // --- INICIO DE LA VALIDACIÓN ---
+          // Comprobamos si el jugador ya está en alguna de las posiciones
+          const isPlayerAlreadyOnField = this.playerPositions.some(
+            (pos) => pos.droppedPlayer?.id === playerData.id
+          );
+
+          if (isPlayerAlreadyOnField) {
+            // Si el jugador ya está, mostramos una alerta y no hacemos nada más
+            // @ts-ignore
+            import('sweetalert2').then((Swal) => {
+              Swal.default.fire({
+                icon: 'error',
+                title: 'Jugador duplicado',
+                text: 'Este jugador ya ha sido colocado en el campo.',
+              });
+            });
+            return; // Detenemos la ejecución del métodos
+          }
+          // --- FIN DE LA VALIDACIÓN ---
+
+          // Si el jugador no está en el campo, lo añadimos
           targetPosition.droppedPlayer = playerData;
           targetPosition.isOccupied = true;
         } catch (e) {
